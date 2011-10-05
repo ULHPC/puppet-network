@@ -1,0 +1,21 @@
+<% if interface == "eth0" -%>
+# The primary (eth0) network interface 
+<% end -%>
+<% if comment != "" -%>
+# <%= comment %>
+<% end -%>
+<% if auto == true -%>
+auto <%= interface %>
+<% end -%>
+<% if address == "" -%>
+iface <%= interface %> inet dhcp
+<% else -%>
+iface <%= interface %> inet static
+	address   <%= address %>
+	netmask   <%= netmask %>
+	network   <%= network %>
+	broadcast <%= broadcast %>
+	gateway   <%= gateway %>
+<% end -%>
+
+
