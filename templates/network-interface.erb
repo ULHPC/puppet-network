@@ -13,9 +13,15 @@ iface <%= interface %> inet dhcp
 iface <%= interface %> inet static
 	address   <%= address %>
 	netmask   <%= netmask %>
+<% if network != "" -%>
 	network   <%= network %>
+<% end -%>
+<% if broadcast != "" -%>
 	broadcast <%= broadcast %>
+<% end -%>
+<% if gateway != "" -%>
 	gateway   <%= gateway %>
+<% end -%>
 <% end -%>
 
 
