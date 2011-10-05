@@ -70,7 +70,7 @@ class network::params {
     # This is the interface file
     # TODO: adapt later for centos etc...
     $interfacesfile = $::operatingsystem ? {
-        default => '/etc/network/interfaces.test',
+        default => '/etc/network/interfaces',
     }
     $interfacesfile_mode = $::operatingsystem ? {
         default => '0644',

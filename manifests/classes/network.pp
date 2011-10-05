@@ -78,7 +78,7 @@ class network::common {
         mode    => "${network::params::interfacesfile_mode}",
         warn    => true,
         require => File["${network::params::configdir}"],
-        #notify  => Service["${network::params::servicename}"]
+        notify  => Service["${network::params::servicename}"]
         #backup  => 'main',
         #require => Exec["backup ${sudo::params::configfile}"],
         #Package['sudo'],
