@@ -37,6 +37,7 @@ define network::interface(
     $network   = '',
     $broadcast = '',
     $auto      = true,
+    $manual    = false,
     $dhcp      = true,
     $ensure    = 'present',
     $priority  = 50
@@ -45,7 +46,7 @@ define network::interface(
 
     include network::params
 
-    if (! $dhcp) and ($address == '') {
+    if (! $manual) and (! $dhcp) and ($address == '') {
         fail("Wrong format in the configuration of the network interface ${interface}")
     }
     

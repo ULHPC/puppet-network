@@ -8,7 +8,11 @@
 auto <%= interface %>
 <% end -%>
 <% if address == "" -%>
+<%   if dhcp -%>
 iface <%= interface %> inet dhcp
+<%   elsif manual -%>
+iface <%= interface %> inet manual
+<%   end -%>
 <% else -%>
 iface <%= interface %> inet static
 	address   <%= address %>
