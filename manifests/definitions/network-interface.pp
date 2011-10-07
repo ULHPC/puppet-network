@@ -40,6 +40,7 @@ define network::interface(
     $manual    = false,
     $dhcp      = true,
     $ensure    = 'present',
+    $post_up   = [],
     $priority  = 50
 )
 {
