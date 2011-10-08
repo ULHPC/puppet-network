@@ -30,18 +30,20 @@
 # [Remember: No empty lines between comments and class definition]
 #
 define network::interface(
-    $comment   = '',
-    $address   = '',
-    $gateway   = '',
-    $netmask   = '255.255.0.0',
-    $network   = '',
-    $broadcast = '',
-    $auto      = true,
-    $manual    = false,
-    $dhcp      = true,
-    $ensure    = 'present',
-    $post_up   = [],
-    $priority  = 50
+    $comment    = '',
+    $address    = '',
+    $gateway    = '',
+    $netmask    = '255.255.0.0',
+    $network    = '',
+    $broadcast  = '',
+    $auto       = true,
+    $manual     = false,
+    $dhcp       = true,
+    $ensure     = 'present',
+    $post_up    = [],
+    $dns_nameservers = '',
+    $dns_search = '',
+    $priority   = 50
 )
 {
 

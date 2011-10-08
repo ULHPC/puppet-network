@@ -26,6 +26,13 @@ iface <%= interface %> inet static
 <% if gateway != "" -%>
 	gateway   <%= gateway %>
 <% end -%>
+<% if dns_nameservers != "" -%>
+      # dns-* options are implemented by the resolvconf package, if installed
+	dns-nameservers <%= dns_nameservers %>
+<% if dns_search != "" -%>
+	dns-search      <%= dns_search %>
+<% end -%>
+<% end -%>
 <% end -%>
 
 
