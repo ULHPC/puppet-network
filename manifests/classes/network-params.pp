@@ -49,13 +49,13 @@ class network::params {
         /(?i-mx:centos|fedora|redhat)/ => true,
         default => true,
     }
-
     $hasrestart = $::operatingsystem ? {
         default => true,
     }
 
     $configdir = $::operatingsystem ? {
-        default => "/etc/network",
+        /(?i-mx:ubuntu|debian)/ => "/etc/network",
+        default => "/etc/sysconfig/network-scripts"
     }
     $configdir_mode = $::operatingsystem ? {
         default => '0755',
@@ -70,7 +70,13 @@ class network::params {
     # This is the interface file
     # TODO: adapt later for centos etc...
     $interfacesfile = $::operatingsystem ? {
-        default => '/etc/network/interfaces',
+        /(?i-mx:ubuntu|debian)/ => '/etc/network/interfaces',
+        default => ''
+    }
+    $ifcfg_prefix = $::operatingsystem ? {
+        /(?i-mx:centos|fedora|redhat)/ => 'ifcfg-',
+        default => ''
+
     }
     $interfacesfile_mode = $::operatingsystem ? {
         default => '0644',

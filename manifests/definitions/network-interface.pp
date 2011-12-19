@@ -15,7 +15,7 @@
 # == Examples
 #
 #  include 'network'
-#  network::interface { 'eth0': 
+#  network::interface { 'eth0':
 #       auto => true,
 #       dhcp => true,
 #  }
@@ -30,16 +30,18 @@
 # [Remember: No empty lines between comments and class definition]
 #
 define network::interface(
+    $ensure     = 'present',
     $comment    = '',
     $address    = '',
     $gateway    = '',
     $netmask    = '255.255.0.0',
     $network    = '',
     $broadcast  = '',
+    $hwaddr     = '',
     $auto       = true,
     $manual     = false,
     $dhcp       = true,
-    $ensure     = 'present',
+    $hotplug    = false,
     $post_up    = [],
     $dns_nameservers = '',
     $dns_search = '',
@@ -49,24 +51,46 @@ define network::interface(
 
     include network::params
 
+    if (! defined(Class['network'])) {
+        include 'network'
+    }
+
     if (! $manual) and (! $dhcp) and ($address == '') {
         fail("Wrong format in the configuration of the network interface ${interface}")
     }
-    
+
     # $name is provided by define invocation
     # guid of this entry
     $interface = $name
 
     # TODO: compute directly network and broadcast from $adress and $netmask....
-    
-    concat::fragment { "${network::params::config_interface_label}_${interface}": 
-        target  => "${network::params::interfacesfile}",
-        ensure  => "${ensure}",
-        content => template("network/network-interface.erb"),
-        order   => $priority,
-    }
-}
+    case $::operatingsystem {
+        debian, ubuntu: {
+            concat::fragment { "${network::params::config_interface_label}_${interface}":
+                target  => "${network::params::interfacesfile}",
+                ensure  => "${ensure}",
+                content => template("network/network-interface.erb"),
+                order   => $priority,
+            }
+        }
+        centos, fedora, redhat: {
+            file { "${network::params::config_interface_label}_${interface}":
+                path    => "${network::params::configdir}/${network::params::ifcfg_prefix}${interface}",
+                owner   => "${network::params::interfacesfile_owner}",
+                group   => "${network::params::interfacesfile_group}",
+                mode    => "${network::params::interfacesfile_mode}",
+                require => File["${network::params::configdir}"],
+                notify  => Service["${network::params::servicename}"],
+                content => template("network/network-interface.redhat-ifcfg.erb"),
+            }
 
+        }
+        default: {
+            fail("network::interface is not supported on $operatingsystem")
+        }
+    }
+
+}
 
 
 

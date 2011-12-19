@@ -46,6 +46,7 @@ class network inherits network::params
 
     case $::operatingsystem {
         debian, ubuntu:         { include network::debian }
+        redhat, fedora, centos: { include network::redhat }
         default: {
             fail("Module $module_name is not supported on $operatingsystem")
         }
@@ -70,30 +71,11 @@ class network::common {
         mode    => "${network::params::configdir_mode}",
     }
 
-    include concat::setup
+    #network::interface { 'lo':
+        
+    # }
 
-    concat { "${network::params::interfacesfile}":
-        owner   => "${network::params::interfacesfile_owner}",
-        group   => "${network::params::interfacesfile_group}",
-        mode    => "${network::params::interfacesfile_mode}",
-        warn    => true,
-        require => File["${network::params::configdir}"],
-        notify  => Service["${network::params::servicename}"]
-        #backup  => 'main',
-        #require => Exec["backup ${sudo::params::configfile}"],
-        #Package['sudo'],
-        #content => template("sudo/sudoconf.erb"),
-        #notify  => Service['sudo'],
-    }
-
-    # Header of the file
-    concat::fragment { "network_interfaces_header":
-        target  => "${network::params::interfacesfile}",
-        content => template("network/01-interfaces_header.erb"),
-        ensure  => 'present',
-        order   => 01,
-    }
-
+    
     service { "${network::params::servicename}":
         enable     => true,
         ensure     => running,
@@ -112,7 +94,7 @@ class network::common {
     # $default_eth0_ensure = defined(Concat::Fragment["${network::params::config_interface_label}_eth0"])
     # ? {
     #     true    => 'absent',
-    #     default => 'present' 
+    #     default => 'present'
     # }
 
     # concat::fragment { "default_${network::params::config_interface_label}_eth0":
@@ -129,7 +111,38 @@ class network::common {
 # = Class: network::debian
 #
 # Specialization class for Debian systems
-class network::debian inherits network::common { }
+class network::debian inherits network::common {
+
+    include concat::setup
+    concat { "${network::params::interfacesfile}":
+        owner   => "${network::params::interfacesfile_owner}",
+        group   => "${network::params::interfacesfile_group}",
+        mode    => "${network::params::interfacesfile_mode}",
+        warn    => true,
+        require => File["${network::params::configdir}"],
+        notify  => Service["${network::params::servicename}"]
+    }
+
+    # Header of the file
+    concat::fragment { "network_interfaces_header":
+        target  => "${network::params::interfacesfile}",
+        content => template("network/01-interfaces_header.erb"),
+        ensure  => 'present',
+        order   => 01,
+    }
+
+
+}
+
+# ------------------------------------------------------------------------------
+# = Class: network::redhat
+#
+# Specialization class for Redhat systems
+class network::redhat inherits network::common {
+
+
+}
+
 
 
 # ------------------------------------------------------------------------------
@@ -155,9 +168,9 @@ class network::debian inherits network::common { }
 
 #     $default_eth0_ensure = defined(Network::Interface['eth0'])
 #     notice("default eth0 : $default_eth0_ensure")
-    
 
-    #     if (! defined(Concat::Fragment['configure_network_interface_eth0'])) {
+
+#     if (! defined(Concat::Fragment['configure_network_interface_eth0'])) {
 #         notify("default configuration for eth0")
 #         # network::interface{ 'eth0:0':
 #         #     auto => true,
