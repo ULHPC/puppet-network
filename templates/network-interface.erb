@@ -26,6 +26,13 @@ iface <%= interface %> inet static
 <% if gateway != "" -%>
 	gateway   <%= gateway %>
 <% end -%>
+<% if nettype == 'Infiniband' and connected_mode == true -%>
+    pre-up      echo connected > /sys/class/net/<%= interface %>/mode
+    pre-up      ifconfig <%= interface %> mtu 65520 
+    post-down   echo datagram > /sys/class/net/<%= interface %>/mode
+    post-down   ifconfig <%= interface %> mtu 2044 
+<% end -%>
+
 <% if dns_nameservers != "" -%>
       # dns-* options are implemented by the resolvconf package, if installed
 	dns-nameservers <%= dns_nameservers %>

@@ -34,6 +34,9 @@ GATEWAY=<%= gateway %>
 <% if hwaddr != "" -%>
 HWADDR=<%= hwaddr %>
 <% end -%>
+<% if nettype != "" -%>
+TYPE=<%= nettype %>
+<% end -%>
 
 <% if auto == true -%>
 ONBOOT=yes
@@ -42,6 +45,9 @@ ONBOOT=no
 <% end -%>
 <% if hotplug == true -%>
 HOTPLUG=yes
+<% end -%>
+<% if connected_mode == true -%>
+CONNECTED_MODE=yes
 <% end -%>
 <% if dns_nameservers != "" -%>
 # DNS specific options
