@@ -52,7 +52,15 @@ CONNECTED_MODE=yes
 <% if dns_nameservers != "" -%>
 # DNS specific options
 PEERDNS=yes
+<%  if dns_nameservers.is_a?(Array) -%>
+DNS1=<%= dns_nameservers.at(0) %>
+<%      if dns_nameservers.at(1) != "" -%>
+DNS2=<%= dns_nameservers.at(1) %>
+<%      end -%>
+<%  end -%>
+<%  if dns_nameservers.is_a?(String) -%>
 DNS1=<%= dns_nameservers %>
+<%  end -%>
 <%      if dns_search != "" -%>
 # dns-search not supported on redhat-like systems (value: '<%= dns_search %>')
 <%      end -%>

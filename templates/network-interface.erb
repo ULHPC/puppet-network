@@ -15,16 +15,16 @@ iface <%= interface %> inet manual
 <%   end -%>
 <% else -%>
 iface <%= interface %> inet static
-	address   <%= address %>
-	netmask   <%= netmask %>
+    address   <%= address %>
+    netmask   <%= netmask %>
 <% if network != "" -%>
-	network   <%= network %>
+    network   <%= network %>
 <% end -%>
 <% if broadcast != "" -%>
-	broadcast <%= broadcast %>
+    broadcast <%= broadcast %>
 <% end -%>
 <% if gateway != "" -%>
-	gateway   <%= gateway %>
+    gateway   <%= gateway %>
 <% end -%>
 <% if nettype == 'Infiniband' and connected_mode == true -%>
     pre-up      echo connected > /sys/class/net/<%= interface %>/mode
@@ -32,14 +32,12 @@ iface <%= interface %> inet static
     post-down   echo datagram > /sys/class/net/<%= interface %>/mode
     post-down   ifconfig <%= interface %> mtu 2044 
 <% end -%>
-
 <% if dns_nameservers != "" -%>
-      # dns-* options are implemented by the resolvconf package, if installed
-	dns-nameservers <%= dns_nameservers %>
-<% if dns_search != "" -%>
-	dns-search      <%= dns_search %>
+    # dns-* options are implemented by the resolvconf package, if installed
+    dns-nameservers <% dns_nameservers.each do |ns| -%><%= ns %> <% end -%>
+<% if dns_search != "" %>
+    dns-search      <%= dns_search %>
 <% end -%>
 <% end -%>
 <% end -%>
-
 
