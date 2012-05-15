@@ -32,6 +32,18 @@ iface <%= interface %> inet static
     post-down   echo datagram > /sys/class/net/<%= interface %>/mode
     post-down   ifconfig <%= interface %> mtu 2044 
 <% end -%>
+<% pre_up.each    do |preu|  -%>
+    pre-up   <%= preu %>
+<% end -%>
+<% post_up.each   do |postu| -%>
+    post-up   <%= postu %>
+<% end -%>
+<% pre_down.each  do |pred|  -%>
+    pre-down  <%= pred %>
+<%  end -%>
+<% post_down.each do |postd| -%>
+    post-down <%= postd %>
+<% end -%>
 <% if dns_nameservers != "" -%>
     # dns-* options are implemented by the resolvconf package, if installed
     dns-nameservers <% dns_nameservers.each do |ns| -%><%= ns %> <% end -%>

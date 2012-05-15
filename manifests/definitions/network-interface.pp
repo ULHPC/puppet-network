@@ -44,7 +44,10 @@ define network::interface(
     $dhcp       = true,
     $hotplug    = false,
     $connected_mode = false,
-    $post_up    = [],
+    $pre_up     = '',
+    $post_up    = '',
+    $pre_down   = '',
+    $post_down  = '',
     $dns_nameservers = '',
     $dns_search = '',
     $priority   = 50
@@ -59,6 +62,12 @@ define network::interface(
 
     if (! $manual) and (! $dhcp) and ($address == '') {
         fail("Wrong format in the configuration of the network interface ${interface}")
+    }
+
+    if ( ($pre_up or $post_up or $pre_down or $post_down) 
+          and ! ($::operatingsystem in [ 'Debian', 'Ubuntu' ])
+       ) {
+        fail("pre_up, post_up, pre_down and post_down parameters are supported only on debian and ubuntu systems")
     }
 
     # $name is provided by define invocation
