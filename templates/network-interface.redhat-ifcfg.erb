@@ -51,7 +51,7 @@ CONNECTED_MODE=yes
 <% end -%>
 <% if dns_nameservers != "" -%>
 # DNS specific options
-PEERDNS=yes
+PEERDNS=no
 <%  if dns_nameservers.is_a?(Array) -%>
 DNS1=<%= dns_nameservers.at(0) %>
 <%      if dns_nameservers.at(1) != "" -%>
