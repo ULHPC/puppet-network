@@ -64,7 +64,7 @@ define network::interface(
         fail("Wrong format in the configuration of the network interface ${interface}")
     }
 
-    if ( ($pre_up or $post_up or $pre_down or $post_down) 
+    if ( ($pre_up or $post_up or $pre_down or $post_down)
           and ! ($::operatingsystem in [ 'Debian', 'Ubuntu' ])
        ) {
         fail("pre_up, post_up, pre_down and post_down parameters are supported only on debian and ubuntu systems")
@@ -86,6 +86,7 @@ define network::interface(
         }
         centos, fedora, redhat: {
             file { "${network::params::config_interface_label}_${interface}":
+                ensure  => "${ensure}",
                 path    => "${network::params::configdir}/${network::params::ifcfg_prefix}${interface}",
                 owner   => "${network::params::interfacesfile_owner}",
                 group   => "${network::params::interfacesfile_group}",
