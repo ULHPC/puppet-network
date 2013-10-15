@@ -31,6 +31,8 @@
 #
 define network::interface(
     $ensure     = 'present',
+    $source     = '',
+    $content    = '',
     $comment    = '',
     $address    = '',
     $gateway    = '',
@@ -63,7 +65,7 @@ define network::interface(
     if (! $manual) and (! $dhcp) and ($address == '') {
         fail("Wrong format in the configuration of the network interface ${interface}")
     }
-
+    
     if ( ($pre_up or $post_up or $pre_down or $post_down)
           and ! ($::operatingsystem in [ 'Debian', 'Ubuntu' ])
        ) {
@@ -74,13 +76,26 @@ define network::interface(
     # guid of this entry
     $interface = $name
 
+    case $content {
+        '': {
+            case $source {
+                '':      { $real_content = template("network/network-interface.erb") }
+                default: { $real_source  = $source }
+            }
+        }
+        default: { $real_content = $content }
+    }
+
+    
     # TODO: compute directly network and broadcast from $adress and $netmask....
     case $::operatingsystem {
         debian, ubuntu: {
             concat::fragment { "${network::params::config_interface_label}_${interface}":
                 target  => "${network::params::interfacesfile}",
                 ensure  => "${ensure}",
-                content => template("network/network-interface.erb"),
+                content => $real_content,
+                source  => $real_source,
+                #content => $real_content, #template("network/network-interface.erb"),
                 order   => $priority,
             }
         }
@@ -93,7 +108,7 @@ define network::interface(
                 mode    => "${network::params::interfacesfile_mode}",
                 require => File["${network::params::configdir}"],
                 notify  => Service["${network::params::servicename}"],
-                content => template("network/network-interface.redhat-ifcfg.erb"),
+                content => $real_content, #template("network/network-interface.redhat-ifcfg.erb"),
             }
 
         }
