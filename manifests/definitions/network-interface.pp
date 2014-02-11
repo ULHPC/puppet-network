@@ -65,7 +65,7 @@ define network::interface(
     if (! $manual) and (! $dhcp) and ($address == '') {
         fail("Wrong format in the configuration of the network interface ${interface}")
     }
-
+    
     if ( ($pre_up or $post_up or $pre_down or $post_down)
           and ! ($::operatingsystem in [ 'Debian', 'Ubuntu' ])
        ) {
@@ -76,28 +76,17 @@ define network::interface(
     # guid of this entry
     $interface = $name
 
-    case $::operatingsystem {
-        debian, ubuntu: {
-            $netconfig_template = 'network/network-interface.erb'
-        }
-        centos, fedora, redhat: {
-            $netconfig_template = 'network/network-interface.redhat-ifcfg.erb'
-        }
-        default: {
-            fail("network::interface is not supported on $operatingsystem")
-        }
-    }
-
     case $content {
         '': {
             case $source {
-                '':      { $real_content = template($netconfig_template) }
+                '':      { $real_content = template("network/network-interface.erb") }
                 default: { $real_source  = $source }
             }
         }
         default: { $real_content = $content }
     }
 
+    
     # TODO: compute directly network and broadcast from $adress and $netmask....
     case $::operatingsystem {
         debian, ubuntu: {
@@ -106,6 +95,7 @@ define network::interface(
                 ensure  => "${ensure}",
                 content => $real_content,
                 source  => $real_source,
+                #content => $real_content, #template("network/network-interface.erb"),
                 order   => $priority,
             }
         }
@@ -118,9 +108,12 @@ define network::interface(
                 mode    => "${network::params::interfacesfile_mode}",
                 require => File["${network::params::configdir}"],
                 notify  => Service["${network::params::servicename}"],
-                content => $real_content,
+                content => $real_content, #template("network/network-interface.redhat-ifcfg.erb"),
             }
 
+        }
+        default: {
+            fail("network::interface is not supported on $operatingsystem")
         }
     }
 
