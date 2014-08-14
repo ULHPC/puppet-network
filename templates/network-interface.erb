@@ -1,36 +1,36 @@
-<% if interface == "eth0" -%>
+<% if @interface == "eth0" -%>
 # The primary (eth0) network interface 
 <% end -%>
-<% if comment != "" -%>
-# <%= comment %>
+<% if @comment != "" -%>
+# <%= @comment %>
 <% end -%>
-<% if auto == true -%>
-auto <%= interface %>
+<% if @auto == true -%>
+auto <%= @interface %>
 <% end -%>
-<% if address == "" -%>
+<% if @address == "" -%>
 <%   if dhcp -%>
-iface <%= interface %> inet dhcp
+iface <%= @interface %> inet dhcp
 <%   elsif manual -%>
-iface <%= interface %> inet manual
+iface <%= @interface %> inet manual
 <%   end -%>
 <% else -%>
-iface <%= interface %> inet static
-    address   <%= address %>
-    netmask   <%= netmask %>
-<% if network != "" -%>
-    network   <%= network %>
+iface <%= @interface %> inet static
+    address   <%= @address %>
+    netmask   <%= @netmask %>
+<% if @network != "" -%>
+    network   <%= @network %>
 <% end -%>
-<% if broadcast != "" -%>
-    broadcast <%= broadcast %>
+<% if @broadcast != "" -%>
+    broadcast <%= @broadcast %>
 <% end -%>
-<% if gateway != "" -%>
-    gateway   <%= gateway %>
+<% if @gateway != "" -%>
+    gateway   <%= @gateway %>
 <% end -%>
-<% if nettype == 'Infiniband' and connected_mode == true -%>
-    pre-up      echo connected > /sys/class/net/<%= interface %>/mode
-    pre-up      ifconfig <%= interface %> mtu 65520 
-    post-down   echo datagram > /sys/class/net/<%= interface %>/mode
-    post-down   ifconfig <%= interface %> mtu 2044 
+<% if @nettype == 'Infiniband' and connected_mode == true -%>
+    pre-up      echo connected > /sys/class/net/<%= @interface %>/mode
+    pre-up      ifconfig <%= @interface %> mtu 65520 
+    post-down   echo datagram > /sys/class/net/<%= @interface %>/mode
+    post-down   ifconfig <%= @interface %> mtu 2044 
 <% end -%>
 <% pre_up.each    do |preu|  -%>
     pre-up   <%= preu %>
