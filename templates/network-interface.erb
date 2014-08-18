@@ -1,5 +1,5 @@
 <% if @interface == "eth0" -%>
-# The primary (eth0) network interface 
+# The primary (eth0) network interface
 <% end -%>
 <% if @comment != "" -%>
 # <%= @comment %>
@@ -28,27 +28,27 @@ iface <%= @interface %> inet static
 <% end -%>
 <% if @nettype == 'Infiniband' and connected_mode == true -%>
     pre-up      echo connected > /sys/class/net/<%= @interface %>/mode
-    pre-up      ifconfig <%= @interface %> mtu 65520 
+    pre-up      ifconfig <%= @interface %> mtu 65520
     post-down   echo datagram > /sys/class/net/<%= @interface %>/mode
-    post-down   ifconfig <%= @interface %> mtu 2044 
+    post-down   ifconfig <%= @interface %> mtu 2044
 <% end -%>
-<% pre_up.each    do |preu|  -%>
+<% @pre_up.each    do |preu|  -%>
     pre-up   <%= preu %>
 <% end -%>
-<% post_up.each   do |postu| -%>
+<% @post_up.each   do |postu| -%>
     post-up   <%= postu %>
 <% end -%>
-<% pre_down.each  do |pred|  -%>
+<% @pre_down.each  do |pred|  -%>
     pre-down  <%= pred %>
 <%  end -%>
-<% post_down.each do |postd| -%>
+<% @post_down.each do |postd| -%>
     post-down <%= postd %>
 <% end -%>
-<% if dns_nameservers != "" -%>
+<% if @dns_nameservers != "" -%>
     # dns-* options are implemented by the resolvconf package, if installed
-    dns-nameservers <% dns_nameservers.each do |ns| -%><%= ns %> <% end -%>
-<% if dns_search != "" %>
-    dns-search      <%= dns_search %>
+    dns-nameservers <% @dns_nameservers.each do |ns| -%><%= ns %> <% end -%>
+<% if @dns_search != "" %>
+    dns-search      <%= @dns_search %>
 <% end -%>
 <% end -%>
 <% end -%>
