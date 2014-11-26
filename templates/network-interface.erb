@@ -8,9 +8,9 @@
 auto <%= @interface %>
 <% end -%>
 <% if @address == "" -%>
-<%   if dhcp -%>
+<%   if @dhcp -%>
 iface <%= @interface %> inet dhcp
-<%   elsif manual -%>
+<%   elsif @manual -%>
 iface <%= @interface %> inet manual
 <%   end -%>
 <% else -%>
