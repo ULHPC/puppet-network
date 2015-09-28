@@ -10,20 +10,20 @@
 class network::common::debian inherits network::common {
 
     include concat::setup
-    concat { "${network::params::interfacesfile}":
-        owner   => "${network::params::interfacesfile_owner}",
-        group   => "${network::params::interfacesfile_group}",
-        mode    => "${network::params::interfacesfile_mode}",
+    concat { $network::params::interfacesfile:
+        owner   => $network::params::interfacesfile_owner,
+        group   => $network::params::interfacesfile_group,
+        mode    => $network::params::interfacesfile_mode,
         warn    => true,
-        require => File["${network::params::configdir}"],
-        notify  => Service["${network::params::servicename}"]
+        require => File[$network::params::configdir],
+        notify  => Service[$network::params::servicename]
     }
 
     # Header of the file
-    concat::fragment { "network_interfaces_header":
-        target  => "${network::params::interfacesfile}",
-        content => template("network/01-interfaces_header.erb"),
+    concat::fragment { 'network_interfaces_header':
         ensure  => 'present',
+        target  => $network::params::interfacesfile,
+        content => template('network/01-interfaces_header.erb'),
         order   => 01,
     }
 

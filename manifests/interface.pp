@@ -68,8 +68,8 @@ define network::interface(
 
     if ( ($pre_up != [ ] or $post_up != [ ] or $pre_down != [ ] or $post_down != [ ])
           and ! ($::operatingsystem in [ 'Debian', 'Ubuntu' ])
-       ) {
-        fail("pre_up, post_up, pre_down and post_down parameters are supported only on debian and ubuntu systems")
+      ) {
+        fail('pre_up, post_up, pre_down and post_down parameters are supported only on debian and ubuntu systems')
     }
 
     # $name is provided by define invocation
@@ -84,7 +84,7 @@ define network::interface(
             $netconfig_template = 'network/network-interface.redhat-ifcfg.erb'
         }
         default: {
-            fail("network::interface is not supported on $operatingsystem")
+            fail("network::interface is not supported on ${::operatingsystem}")
         }
     }
 
@@ -102,8 +102,8 @@ define network::interface(
     case $::operatingsystem {
         debian, ubuntu: {
             concat::fragment { "${network::params::config_interface_label}_${interface}":
-                target  => "${network::params::interfacesfile}",
-                ensure  => "${ensure}",
+                ensure  => $ensure,
+                target  => $network::params::interfacesfile,
                 content => $real_content,
                 source  => $real_source,
                 order   => $priority,
@@ -111,16 +111,18 @@ define network::interface(
         }
         centos, fedora, redhat: {
             file { "${network::params::config_interface_label}_${interface}":
-                ensure  => "${ensure}",
+                ensure  => $ensure,
                 path    => "${network::params::configdir}/${network::params::ifcfg_prefix}${interface}",
-                owner   => "${network::params::interfacesfile_owner}",
-                group   => "${network::params::interfacesfile_group}",
-                mode    => "${network::params::interfacesfile_mode}",
-                require => File["${network::params::configdir}"],
-                notify  => Service["${network::params::servicename}"],
+                owner   => $network::params::interfacesfile_owner,
+                group   => $network::params::interfacesfile_group,
+                mode    => $network::params::interfacesfile_mode,
+                require => File[$network::params::configdir],
+                notify  => Service[$network::params::servicename],
                 content => $real_content,
             }
-
+        }
+        default: {
+            fail("Module ${module_name} is not supported on ${::operatingsystem}")
         }
     }
 

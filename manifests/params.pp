@@ -54,8 +54,8 @@ class network::params {
     }
 
     $configdir = $::operatingsystem ? {
-        /(?i-mx:ubuntu|debian)/ => "/etc/network",
-        default => "/etc/sysconfig/network-scripts"
+        /(?i-mx:ubuntu|debian)/ => '/etc/network',
+        default => '/etc/sysconfig/network-scripts'
     }
     $configdir_mode = $::operatingsystem ? {
         default => '0755',

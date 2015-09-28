@@ -41,14 +41,14 @@
 #
 class network inherits network::params
 {
-    info ("Configuring network interfaces")
+    info ('Configuring network interfaces')
 
 
     case $::operatingsystem {
         debian, ubuntu:         { include network::common::debian }
         redhat, fedora, centos: { include network::common::redhat }
         default: {
-            fail("Module $module_name is not supported on $operatingsystem")
+            fail("Module ${module_name} is not supported on ${::operatingsystem}")
         }
     }
 }

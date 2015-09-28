@@ -14,19 +14,19 @@ class network::common {
     # Load the variables used in this module. Check the network-params.pp file
     require network::params
 
-    file { "${network::params::configdir}":
+    file { $network::params::configdir:
         ensure => 'directory',
-        owner   => "${network::params::configdir_owner}",
-        group   => "${network::params::configdir_group}",
-        mode    => "${network::params::configdir_mode}",
+        owner  => $network::params::configdir_owner,
+        group  => $network::params::configdir_group,
+        mode   => $network::params::configdir_mode,
     }
 
-    service { "${network::params::servicename}":
-        enable     => true,
+    service { $network::params::servicename:
         ensure     => running,
-        pattern    => "${network::params::processname}",
-        hasrestart => "${network::params::hasrestart}",
-        hasstatus  => "${network::params::hasstatus}",
+        enable     => true,
+        pattern    => $network::params::processname,
+        hasrestart => $network::params::hasrestart,
+        hasstatus  => $network::params::hasstatus,
     }
 
 }
