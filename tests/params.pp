@@ -15,7 +15,7 @@
 
 include 'network::params'
 
-$names = ["servicename", "processname", "hasstatus", "hasrestart", "configdir", "configdir_mode", "configdir_owner", "configdir_group", "interfacesfile", "ifcfg_prefix", "interfacesfile_mode", "interfacesfile_owner", "interfacesfile_group", "config_interface_label"]
+$names = ['servicename', 'processname', 'hasstatus', 'hasrestart', 'configdir', 'configdir_mode', 'configdir_owner', 'configdir_group', 'interfacesfile', 'ifcfg_prefix', 'interfacesfile_mode', 'interfacesfile_owner', 'interfacesfile_group', 'config_interface_label']
 
 notice("network::params::servicename = ${network::params::servicename}")
 notice("network::params::processname = ${network::params::processname}")

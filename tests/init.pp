@@ -16,5 +16,17 @@
 #      sudo puppet apply -t /vagrant/tests/init.pp
 #
 node default {
+
     include network
+
+    network::interface { 'dummy0':
+        address         => '10.20.30.40',
+        netmask         => '255.255.0.0',
+        network         => '10.20.0.0',
+        broadcast       => '10.20.255.255',
+        gateway         => '10.20.0.1',
+        dns_nameservers => '10.20.0.254',
+        dns_search      => 'uni.lu'
+    }
+
 }
