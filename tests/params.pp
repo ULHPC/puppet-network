@@ -15,12 +15,22 @@
 
 include 'network::params'
 
-$names = ["ensure", "protocol", "port", "packagename"]
+$names = ["servicename", "processname", "hasstatus", "hasrestart", "configdir", "configdir_mode", "configdir_owner", "configdir_group", "interfacesfile", "ifcfg_prefix", "interfacesfile_mode", "interfacesfile_owner", "interfacesfile_group", "config_interface_label"]
 
-notice("network::params::ensure = ${network::params::ensure}")
-notice("network::params::protocol = ${network::params::protocol}")
-notice("network::params::port = ${network::params::port}")
-notice("network::params::packagename = ${network::params::packagename}")
+notice("network::params::servicename = ${network::params::servicename}")
+notice("network::params::processname = ${network::params::processname}")
+notice("network::params::hasstatus = ${network::params::hasstatus}")
+notice("network::params::hasrestart = ${network::params::hasrestart}")
+notice("network::params::configdir = ${network::params::configdir}")
+notice("network::params::configdir_mode = ${network::params::configdir_mode}")
+notice("network::params::configdir_owner = ${network::params::configdir_owner}")
+notice("network::params::configdir_group = ${network::params::configdir_group}")
+notice("network::params::interfacesfile = ${network::params::interfacesfile}")
+notice("network::params::ifcfg_prefix = ${network::params::ifcfg_prefix}")
+notice("network::params::interfacesfile_mode = ${network::params::interfacesfile_mode}")
+notice("network::params::interfacesfile_owner = ${network::params::interfacesfile_owner}")
+notice("network::params::interfacesfile_group = ${network::params::interfacesfile_group}")
+notice("network::params::config_interface_label = ${network::params::config_interface_label}")
 
 #each($names) |$v| {
 #    $var = "network::params::${v}"
