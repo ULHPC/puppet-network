@@ -1,4 +1,4 @@
-# File::      <tt>network-params.pp</tt>
+# File::      <tt>params.pp</tt>
 # Author::    Sebastien Varrette (Sebastien.Varrette@uni.lu)
 # Copyright:: Copyright (c) 2011 Sebastien Varrette
 # License::   GPL v3
@@ -88,9 +88,9 @@ class network::params {
         default => 'root',
     }
 
-    # Prefix used in the concat-fragment resource when configuring a network interface 
+    # Prefix used in the concat-fragment resource when configuring a network interface
     $config_interface_label = 'configure_network_interface'
-    
+
     # $pkgmanager = $::operatingsystem ? {
     #     /(?i-mx:ubuntu|debian)/	       => [ '/usr/bin/apt-get' ],
     #     /(?i-mx:centos|fedora|redhat)/ => [ '/bin/rpm', '/usr/bin/up2date', '/usr/bin/yum' ],
