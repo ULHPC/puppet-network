@@ -4,7 +4,7 @@
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/ULHPC/network.svg)](https://forge.puppetlabs.com/ULHPC/network)
 [![License](http://img.shields.io/:license-GPL3.0-blue.svg)](LICENSE)
-![Supported Platforms](http://img.shields.io/badge/platform-debian-lightgrey.svg)
+![Supported Platforms](http://img.shields.io/badge/platform-debian|centos-lightgrey.svg)
 [![Documentation Status](https://readthedocs.org/projects/ulhpc-puppet-network/badge/?version=latest)](https://readthedocs.org/projects/ulhpc-puppet-network/?badge=latest)
 
 Configure various network aspects (interfaces etc.)
@@ -21,8 +21,14 @@ Configure various network aspects (interfaces etc.).
 This module implements the following elements: 
 
 * __Puppet classes__:
+    - `network` 
+    - `network::common` 
+    - `network::common::debian` 
+    - `network::common::redhat` 
+    - `network::params` 
 
 * __Puppet definitions__: 
+    - `network::interface` 
 
 All these components are configured through a set of variables you will find in
 [`manifests/params.pp`](manifests/params.pp). 
@@ -35,6 +41,7 @@ See `docs/contributing.md` for more details on the steps you shall follow to hav
 See [`metadata.json`](metadata.json). In particular, this module depends on 
 
 * [puppetlabs/stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib)
+* [puppetlabs/concat](https://forge.puppetlabs.com/puppetlabs/concat)
 
 ## Overview and Usage
 
@@ -51,6 +58,23 @@ Use it as follows:
 
 See also [`tests/init.pp`](tests/init.pp)
 
+
+### Definition `network::interface`
+
+The definition `network::interface` provides ...
+This definition accepts the following parameters:
+
+* `$ensure`: default to 'present', can be 'absent'
+* `$content`: specify the contents of the directive as a string
+* `$source`: copy a file as the content of the directive.
+
+Example:
+
+        network::interface { 'toto':
+		      ensure => 'present',
+        }
+
+See also [`tests/interface.pp`](tests/interface.pp)
 
 
 ## Librarian-Puppet / R10K Setup
