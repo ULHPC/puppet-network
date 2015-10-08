@@ -37,5 +37,18 @@
       ]
     }
   ],
-  "tags": ["debian", "centos", "redhat", "network", "interface"]
+  "tags": [
+    "network",
+    "interface"
+  ],
+  "classes": [
+    "network",
+    "network::common",
+    "network::common::debian",
+    "network::common::redhat",
+    "network::params"
+  ],
+  "definitions": [
+    "network::interface"
+  ]
 }
