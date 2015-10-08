@@ -9,7 +9,6 @@
 # Specialization class for Debian systems
 class network::common::debian inherits network::common {
 
-    include concat::setup
     concat { $network::params::interfacesfile:
         owner   => $network::params::interfacesfile_owner,
         group   => $network::params::interfacesfile_group,
