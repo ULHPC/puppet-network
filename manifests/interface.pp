@@ -76,6 +76,12 @@ define network::interface(
     # guid of this entry
     $interface = $name
 
+    $pre_up_array = flatten([$pre_up])
+    $post_up_array = flatten([$post_up])
+    $pre_down_array = flatten([$pre_down])
+    $post_down_array = flatten([$post_down])
+    $dns_nameservers_array = flatten([$dns_nameservers])
+
     case $::operatingsystem {
         debian, ubuntu: {
             $netconfig_template = 'network/network-interface.erb'
