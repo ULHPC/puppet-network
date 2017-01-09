@@ -41,6 +41,7 @@ define network::interface(
     $broadcast  = '',
     $hwaddr     = '',
     $nettype    = '',
+    $bridge     = '',
     $auto       = true,
     $manual     = false,
     $dhcp       = true,

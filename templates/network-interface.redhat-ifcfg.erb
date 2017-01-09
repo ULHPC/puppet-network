@@ -37,7 +37,9 @@ HWADDR=<%= @hwaddr %>
 <% if @nettype != "" -%>
 TYPE=<%= @nettype %>
 <% end -%>
-
+<% if @bridge != "" -%>
+BRIDGE=<%= @bridge %>
+<% end -%>
 <% if @auto == true -%>
 ONBOOT=yes
 <% else -%>
