@@ -52,4 +52,12 @@ iface <%= @interface %> inet static
 <% end -%>
 <% end -%>
 <% end -%>
+<% if @nettype == 'Bridge' -%>
+    bridge_ports <%= bridge_port %>
+    bridge_stp off
+    bridge_maxwait 5
+    bridge_fd 0
+    pre-up /sbin/ifup <%= bridge_port %>
+    post-down /sbin/ifdown <%= bridge_port %>
+<% end -%>
 
