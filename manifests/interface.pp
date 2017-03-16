@@ -34,6 +34,8 @@ define network::interface(
     $source     = '',
     $content    = '',
     $comment    = '',
+    $addressv6  = '',
+    $gatewayv6  = '',
     $address    = '',
     $gateway    = '',
     $netmask    = '255.255.0.0',

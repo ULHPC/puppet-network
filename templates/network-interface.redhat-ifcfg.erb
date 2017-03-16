@@ -30,6 +30,11 @@ BROADCAST=<%= @broadcast %>
 <%      if @gateway != "" -%>
 GATEWAY=<%= @gateway %>
 <%      end -%>
+<%      if @addressv6 != "" and @gatewayv6 != "" -%>
+IPV6INIT=yes
+IPV6ADDR=<%= @addressv6 %>
+IPV6_DEFAULTGW=<%= @gatewayv6 %>
+<%      end -%>
 <% end -%>
 <% if @hwaddr != "" -%>
 HWADDR=<%= @hwaddr %>
