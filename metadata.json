@@ -1,6 +1,6 @@
 {
   "name": "ULHPC-network",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "author": "UL HPC Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure various network aspects (interfaces etc.)",
