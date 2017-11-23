@@ -69,3 +69,6 @@ DNS2=<%= @dns_nameservers.at(1) %>
 # dns-search not supported on redhat-like systems (value: '<%= @dns_search %>')
 <%      end -%>
 <% end -%>
+<% if @devtimeout.to_i > 0 -%>
+DEVTIMEOUT=<%= @devtimeout %>
+<% end -%>

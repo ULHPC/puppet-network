@@ -56,6 +56,7 @@ define network::interface(
     $post_down  = [  ],
     $dns_nameservers = '',
     $dns_search = '',
+    $devtimeout = 0,
     $priority   = 50
 )
 {
