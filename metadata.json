@@ -1,7 +1,7 @@
 {
   "name": "ULHPC-network",
-  "version": "0.1.7",
-  "author": "S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team",
+  "version": "0.1.8",
+  "author": "UL HPC Team",
   "mail": "hpc-sysadmins@uni.lu",
   "summary": "Configure various network aspects (interfaces etc.)",
   "description": "Configure various network aspects (interfaces etc.)",

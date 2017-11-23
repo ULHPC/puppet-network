@@ -12,7 +12,7 @@
 class network::common {
 
     # Load the variables used in this module. Check the network-params.pp file
-    require network::params
+    require ::network::params
 
     file { $network::params::configdir:
         ensure => 'directory',

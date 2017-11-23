@@ -15,7 +15,7 @@ class network::common::debian inherits network::common {
         mode    => $network::params::interfacesfile_mode,
         warn    => true,
         require => File[$network::params::configdir],
-        notify  => Service[$network::params::servicename]
+        notify  => Service[$network::params::servicename],
     }
 
     # Header of the file
@@ -23,7 +23,7 @@ class network::common::debian inherits network::common {
         ensure  => 'present',
         target  => $network::params::interfacesfile,
         content => template('network/01-interfaces_header.erb'),
-        order   => 01,
+        order   => '01',
     }
 
 }

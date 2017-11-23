@@ -56,14 +56,15 @@ define network::interface(
     $post_down  = [  ],
     $dns_nameservers = '',
     $dns_search = '',
+    $devtimeout = 0,
     $priority   = 50
 )
 {
 
-    include network::params
+    include ::network::params
 
     if (! defined(Class['network'])) {
-        include 'network'
+        include '::network'
     }
 
     if (! $manual) and (! $dhcp) and ($address == '') {
@@ -87,10 +88,10 @@ define network::interface(
     $dns_nameservers_array = flatten([$dns_nameservers])
 
     case $::operatingsystem {
-        debian, ubuntu: {
+        'debian', 'ubuntu': {
             $netconfig_template = 'network/network-interface.erb'
         }
-        centos, fedora, redhat: {
+        'centos', 'fedora', 'redhat': {
             $netconfig_template = 'network/network-interface.redhat-ifcfg.erb'
         }
         default: {
@@ -110,7 +111,7 @@ define network::interface(
 
     # TODO: compute directly network and broadcast from $adress and $netmask....
     case $::operatingsystem {
-        debian, ubuntu: {
+        'debian', 'ubuntu': {
             concat::fragment { "${network::params::config_interface_label}_${interface}":
                 ensure  => $ensure,
                 target  => $network::params::interfacesfile,
@@ -119,7 +120,7 @@ define network::interface(
                 order   => $priority,
             }
         }
-        centos, fedora, redhat: {
+        'centos', 'fedora', 'redhat': {
             file { "${network::params::config_interface_label}_${interface}":
                 ensure  => $ensure,
                 path    => "${network::params::configdir}/${network::params::ifcfg_prefix}${interface}",
