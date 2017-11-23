@@ -9,7 +9,7 @@
 
 Configure various network aspects (interfaces etc.)
 
-      Copyright (c) 2017 S. Varrette, H. Cartiaux, V. Plugaru, S. Diehl aka. UL HPC Management Team <hpc-sysadmins@uni.lu>
+      Copyright (c) 2017 UL HPC Team <hpc-sysadmins@uni.lu>
       
 
 | [Project Page](https://github.com/ULHPC/puppet-network) | [Sources](https://github.com/ULHPC/puppet-network) | [Documentation](https://ulhpc-puppet-network.readthedocs.org/en/latest/) | [Issues](https://github.com/ULHPC/puppet-network/issues) |
